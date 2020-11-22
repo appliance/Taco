@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.min.tacocloud.mapper.TacoUserMapper">
+
+    <!--  查询所有用户  -->
+    <select id="findAllUsers" resultType="com.min.tacocloud.entity.TacoUser">
+        select * from users
+    </select>
+
+    <!--  依据用户名查询用户  -->
+    <select id="findUserByName" parameterType="String" resultType="com.min.tacocloud.entity.TacoUser">
+        select username, password, fullname, street, city, state, zip, phone_number as phoneNumber
+        from users
+        <where>
+            <if test="username != '' and username != null">
+                username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <!--  插入新用户   -->
+    <insert id="addUser" parameterType="com.min.tacocloud.entity.TacoUser">
+        insert into users (username, password, fullname, street, city, state, zip, phone_number) values
+        (#{username}, #{password}, #{fullname},
+        #{street}, #{city}, #{state}, #{zip}, #{phoneNumber})
+    </insert>
+</mapper>
